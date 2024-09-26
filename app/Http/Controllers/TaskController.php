@@ -1,0 +1,63 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Task;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+class TaskController extends Controller
+{
+    use AuthorizesRequests; // This trait is used to authorize actions in the controller
+
+    public function taskform(){
+        return view('taskform');
+    }
+    public function addtask(Request $request){
+        $newtask = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        $newtask['titile'] = strip_tags($newtask['title']);
+        $newtask['body'] = strip_tags($newtask['body']);
+        $newtask['user_id'] = auth()->id();
+
+        $tasking = Task::create($newtask);
+        return redirect("/task/{$tasking->id}");
+    }
+
+    public function singleTask(Task $task){
+        return view('single-task', ['task' => $task])->with('success', 'Task created successfully!');
+    }
+    public function allTasks(){
+        $id = auth()->id();
+        $tasks = Task::where('user_id', $id)->get();
+        return view('all-tasks', ['tasks' => $tasks]);
+    }
+    public function editTask(Task $task){
+        \Log::info('Task function ID: ' . $task->id);
+        \Log::info('Task Owner ID: ' . $task->user_id);
+        return view('edit-task', ['task' => $task]);
+    }
+    public function updateTask(Request $request, Task $task)
+    {
+        $updatesTask = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        $updatesTask['title'] = strip_tags($updatesTask['title']);
+        $updatesTask['body'] = strip_tags($updatesTask['body']);
+        $task->update($updatesTask);
+
+        return redirect('all-tasks')->with('success', 'Task updated successfully!');
+    }
+    public function deleteTask(Task $task){
+        if (auth()->user()->cannot('delete', $task)){
+            return redirect('all-tasks')->with('error', 'You are not authorized to delete this task!');
+        }
+        $task->delete();
+        return redirect('all-tasks')->with('success', 'Task deleted successfully!');
+    }
+}
