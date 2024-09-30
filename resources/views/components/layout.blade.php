@@ -18,7 +18,7 @@
         <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">ToDo App</a></h4>
         @auth
           <div class="flex-row my-3 my-md-0">
-            <a class="btn btn-sm btn-success mr-2" href="/tasks">Create Task</a>
+            <a class="btn btn-sm btn-success mr-2" href="{{route('createTask')}}">Create Task</a>
             <form action="/logout" method="POST" class="d-inline">
               @csrf
               <button class="btn btn-sm btn-secondary">Sign Out</button>
@@ -65,7 +65,7 @@
     {{$slot}}
 
     <footer class="border-top text-center small text-muted py-3">
-        <p class="m-0">Copyright &copy; {{date('Y')}} <a href="/" class="text-muted">ToDo App</a>. All rights reserved.</p>
+        <p class="m-0">Copyright &copy; {{date('Y')}} <a href="/" class="text-muted">{{config('app.name')}}</a>. All rights reserved.</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

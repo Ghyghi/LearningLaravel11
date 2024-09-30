@@ -40,7 +40,7 @@ class UserController extends Controller
         ]);
         if (auth()->attempt(['name'=>$incomingFields['loginusername'], 'password'=>$incomingFields['loginpassword']])){
             $request->session()->regenerate();
-            return redirect('/dashboard')->with('success', 'You have been logged in');
+            return redirect()->route('dashboard')->with('success', 'You have been logged in');
         }
         else{
             return redirect('/')->with('error', 'Invalid login. Please try again.');

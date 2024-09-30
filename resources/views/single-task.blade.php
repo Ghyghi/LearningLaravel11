@@ -5,7 +5,7 @@
           @can('update', $task)
             <span class="pt-2">
               <a href="/edit-task/{{$task->id}}" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-              <form class="delete-post-form d-inline" action="/task/{{$task->id}}" method="POST">
+              <form class="delete-post-form d-inline" action="{{route('deleteTask', $task->id)}}" method="POST">
                 @method('DELETE')
                 @csrf
                 <button class="delete-post-button text-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fas fa-trash"></i></button>
@@ -21,6 +21,6 @@
         <div class="body-content">
             <p>{{$task->body}}</p>
         </div>
-        <a href="/all-tasks">Back to tasks</a>
+        <a href="{{route('viewAllTasks')}}">Back to tasks</a>
       </div>
 </x-layout>

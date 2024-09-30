@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container py-md-5 container--narrow">
-        <form action="/edit/task/{{$task->id}}" method="POST">
+        <form action="{{ route('submitEditTask', $task->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">

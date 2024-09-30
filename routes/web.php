@@ -11,12 +11,20 @@ Route::post('/login', [UserController::class, 'login'])->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 //Task Routes
-Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('auth');
-Route::get('/tasks', [TaskController::class, 'taskform'])->middleware('auth');//Create task form
-Route::post('/create-task', [TaskController::class, 'addtask'])->middleware('auth');//Submit form
-Route::get('/task/{task}', [TaskController::class, 'singleTask'])->middleware('auth');//View single task
-Route::get('/all-tasks', [TaskController::class, 'allTasks'])->middleware('auth');//All tasks
-Route::get('/edit-task/{task}', [TaskController::class, 'editTask']);//See edit Form
-Route::put('/edit/task/{task}', [TaskController::class, 'updateTask'])->middleware('auth');
-Route::delete('/task/{task}', [TaskController::class, 'deleteTask'])->middleware('auth');
+
+Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+//View the create task form
+Route::get('/tasks', [TaskController::class, 'taskform'])->middleware('auth')->name('createTask');
+//Submit the create task form
+Route::post('/create-task', [TaskController::class, 'addtask'])->middleware('auth')->name('submitCreateTask');
+//View single task
+Route::get('/task/{task}', [TaskController::class, 'singleTask'])->middleware('can:view,task')->name('viewSingleTask');
+//View all tasks
+Route::get('/all-tasks', [TaskController::class, 'allTasks'])->middleware('auth')->name('viewAllTasks');
+//View the edit task form
+Route::get('/edit-task/{task}', [TaskController::class, 'editTask'])->middleware('can:update,task')->name('editTask');
+//Submit the edit task form
+Route::put('/edit/task/{task}', [TaskController::class, 'updateTask'])->middleware('can:update,task')->name('submitEditTask');
+//Delete a task
+Route::delete('/task/{task}', [TaskController::class, 'deleteTask'])->middleware('can:delete,task')->name('deleteTask');
 

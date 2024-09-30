@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// use App\Policies\TaskPolicy;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class TaskController extends Controller
         $newtask['user_id'] = auth()->id();
 
         $tasking = Task::create($newtask);
-        return redirect("/task/{$tasking->id}");
+        return redirect()->route('viewSingleTask', ['task'=>$task->id]);
     }
 
     public function singleTask(Task $task){
@@ -37,27 +38,28 @@ class TaskController extends Controller
         return view('all-tasks', ['tasks' => $tasks]);
     }
     public function editTask(Task $task){
-        \Log::info('Task function ID: ' . $task->id);
-        \Log::info('Task Owner ID: ' . $task->user_id);
         return view('edit-task', ['task' => $task]);
     }
-    public function updateTask(Request $request, Task $task)
-    {
+    public function updateTask(Request $request, Task $task){
         $updatesTask = $request->validate([
             'title' => 'required',
             'body' => 'required'
-        ]);
-        $updatesTask['title'] = strip_tags($updatesTask['title']);
-        $updatesTask['body'] = strip_tags($updatesTask['body']);
-        $task->update($updatesTask);
+            ]);
+            $updatesTask['title'] = strip_tags($updatesTask['title']);
+            $updatesTask['body'] = strip_tags($updatesTask['body']);
+            $task->update($updatesTask);
 
-        return redirect('all-tasks')->with('success', 'Task updated successfully!');
+            return redirect()->route('viewAllTasks')->with('success', 'Task updated successfully!');
+        
     }
     public function deleteTask(Task $task){
-        if (auth()->user()->cannot('delete', $task)){
-            return redirect('all-tasks')->with('error', 'You are not authorized to delete this task!');
+        if ($this->authorize('delete', $task)){
+            $task->delete();
+        return redirect()->route('viewAllTasks')->with('success', 'Task deleted successfully!');
         }
-        $task->delete();
-        return redirect('all-tasks')->with('success', 'Task deleted successfully!');
+        else{
+            return redirect()->route('dashboard')->with('error', 'You are not authorized to delete this task!');
+        }
+        
     }
 }

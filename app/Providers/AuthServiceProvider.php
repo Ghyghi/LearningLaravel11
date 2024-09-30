@@ -23,6 +23,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        // Additional gates or policies can be registered here if needed
     }
 }
