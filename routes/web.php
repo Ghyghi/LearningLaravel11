@@ -3,14 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 //Admin Routes
-Route::get('/admin-dashboard', function(){
-    // if (Gate::allows('admin')){
-    //     return x;
-    // }
-    Return ('Only allows admins');
-})->middleware('can:admin');
+Route::get('/admin-dashboard', [AdminController::class, 'admin_dashboard'])->middleware('can:admin')->name('adminDashboard');
 //User Routes
 Route::get('/', [UserController::class, 'showCorrectHomepage'])->name('login');
 Route::post('/register', [UserController::class, 'register'])->middleware('guest');

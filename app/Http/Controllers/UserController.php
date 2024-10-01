@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -40,7 +42,13 @@ class UserController extends Controller
         ]);
         if (auth()->attempt(['name'=>$incomingFields['loginusername'], 'password'=>$incomingFields['loginpassword']])){
             $request->session()->regenerate();
-            return redirect()->route('dashboard')->with('success', 'You have been logged in');
+            //Redirect Admin to admin dashboard, else redirect to normal dashboard
+            if (Gate::allows('admin')){
+                return redirect()->route('adminDashboard')->with('success', 'Login Success');
+            }
+            else{
+                return redirect()->route('dashboard')->with('success', 'You have been logged in');
+            }
         }
         else{
             return redirect('/')->with('error', 'Invalid login. Please try again.');
