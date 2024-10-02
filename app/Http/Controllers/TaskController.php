@@ -21,12 +21,12 @@ class TaskController extends Controller
             'title' => 'required',
             'body' => 'required'
         ]);
-        $newtask['titile'] = strip_tags($newtask['title']);
+        $newtask['title'] = strip_tags($newtask['title']);
         $newtask['body'] = strip_tags($newtask['body']);
         $newtask['user_id'] = auth()->id();
 
         $tasking = Task::create($newtask);
-        return redirect()->route('viewSingleTask', ['task'=>$task->id]);
+        return redirect()->route('viewSingleTask', ['task'=>$tasking->id]);
     }
     public function singleTask(Task $task){
         return view('single-task', ['task' => $task])->with('success', 'Task created successfully!');
