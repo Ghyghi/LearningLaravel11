@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 
 //Admin Routes
 Route::get('/admin-dashboard', [AdminController::class, 'admin_dashboard'])->middleware('can:admin')->name('adminDashboard');
+Route::get('/user-tasks', [AdminController::class, 'viewTasks'])->middleware('can:admin')->name('viewTasks');
+
 //User Routes
 Route::get('/', [UserController::class, 'showCorrectHomepage'])->name('login');
 Route::post('/register', [UserController::class, 'register'])->middleware('guest');
@@ -14,7 +16,6 @@ Route::post('/login', [UserController::class, 'login'])->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 //Task Routes
-
 Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('auth')->name('dashboard');
 //View the create task form
 Route::get('/tasks', [TaskController::class, 'taskform'])->middleware('auth')->name('createTask');

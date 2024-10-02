@@ -15,9 +15,15 @@
   <body>
     <header class="header-bar mb-3">
       <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-        <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">ToDo App</a></h4>
         @auth
           <div class="flex-row my-3 my-md-0">
+            @if(auth()->user()->isAdmin===1)
+              <h4 class="my-0 mr-md-auto font-weight-normal"><a href="{{ route('adminDashboard') }}" class="text-white">ToDo App</a></h4>
+              <a class="btn btn-sm btn-success mr-2" href="{{route('adminDashboard')}}">Dashboard</a>
+            @else
+              <h4 class="my-0 mr-md-auto font-weight-normal"><a href="{{ route('dashboard') }}" class="text-white">ToDo App</a></h4>
+              <a class="btn btn-sm btn-success mr-2" href="{{route('dashboard')}}">Dashboard</a>
+            @endif
             <a class="btn btn-sm btn-success mr-2" href="{{route('createTask')}}">Create Task</a>
             <form action="/logout" method="POST" class="d-inline">
               @csrf
@@ -25,6 +31,7 @@
             </form>
           </div>
         @else
+          <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">ToDo App</a></h4>
           <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">
             @csrf
             <div class="row align-items-center">

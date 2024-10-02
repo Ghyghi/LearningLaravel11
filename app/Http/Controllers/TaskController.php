@@ -28,7 +28,6 @@ class TaskController extends Controller
         $tasking = Task::create($newtask);
         return redirect()->route('viewSingleTask', ['task'=>$task->id]);
     }
-
     public function singleTask(Task $task){
         return view('single-task', ['task' => $task])->with('success', 'Task created successfully!');
     }

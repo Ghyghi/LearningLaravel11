@@ -21,6 +21,13 @@
         <div class="body-content">
             <p>{{$task->body}}</p>
         </div>
-        <a href="{{route('viewAllTasks')}}">Back to tasks</a>
+        @auth
+            @if(auth()->user()->isAdmin===1)
+            <a href="{{route('viewTasks')}}">Back to tasks</a>
+            @else
+            <a href="{{route('viewAllTasks')}}">Back to tasks</a>
+            @endif
+        @endauth
+        
       </div>
 </x-layout>

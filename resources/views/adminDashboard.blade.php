@@ -13,4 +13,6 @@
             <li>{{ $records->name }}</li>
         @endforeach
     </ul>
+    <h3>View their tasks</h3>
+    <a href="{{ route('viewTasks') }}">Click here to see all their tasks</a>
 </x-layout>
