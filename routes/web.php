@@ -24,8 +24,8 @@ Route::get('roles/{role}/givePermission', [RoleController::class,'givePermission
 Route::put('roles/{role}/givePermission', [RoleController::class,'updatePermission'])->middleware('can:admin');
 
 //User role and permission route
-Route::resource('users', UsersController::class);
-
+Route::resource('users', UsersController::class)->middleware('can:admin');
+Route::get('users/{userId}/delete', [UsersController::class, 'destroy'])->middleware('can:admin');
 
 //User Routes
 Route::get('/', [UserController::class, 'showCorrectHomepage'])->name('login');
