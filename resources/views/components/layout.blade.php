@@ -18,7 +18,9 @@
         @auth
           <div class="flex-row my-3 my-md-0">
             @if(auth()->user()->isAdmin===1)
-              <h4 class="my-0 mr-md-auto font-weight-normal"><a href="{{ route('adminDashboard') }}" class="text-white">ToDo App</a></h4>
+              <h4 class="my-0 mr-md-auto font-weight-normal">
+                <a href="{{ route('adminDashboard') }}" class="text-white">ToDo App</a>
+              </h4>
               <a class="btn btn-sm btn-success mr-2" href="{{route('adminDashboard')}}">Dashboard</a>
             @else
               <h4 class="my-0 mr-md-auto font-weight-normal"><a href="{{ route('dashboard') }}" class="text-white">ToDo App</a></h4>

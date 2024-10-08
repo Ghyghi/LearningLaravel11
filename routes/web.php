@@ -1,13 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\PermissionController;
 
 //Admin Routes
 Route::get('/admin-dashboard', [AdminController::class, 'admin_dashboard'])->middleware('can:admin')->name('adminDashboard');
 Route::get('/user-tasks', [AdminController::class, 'viewTasks'])->middleware('can:admin')->name('viewTasks');
+
+//Permission Routes
+Route::resource('permissions', PermissionController::class)->middleware('can:admin');
+Route::get('permissions/{permission}/delete', [PermissionController::class,'destroy'])->middleware('can:admin');
+
+
+//Role routes
+Route::resource('roles', RoleController::class)->middleware('can:admin');
+Route::get('roles/{role}/delete', [RoleController::class,'destroy'])->middleware('can:admin');
+Route::get('roles/{role}/givePermission', [RoleController::class,'givePermission'])->middleware('can:admin');
+Route::put('roles/{role}/givePermission', [RoleController::class,'updatePermission'])->middleware('can:admin');
+
+//User role and permission route
+Route::resource('users', UsersController::class);
+
 
 //User Routes
 Route::get('/', [UserController::class, 'showCorrectHomepage'])->name('login');
