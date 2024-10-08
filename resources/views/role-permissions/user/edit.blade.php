@@ -22,10 +22,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="">Roles</label>
-                                <select name="roles[]" class="form-control" value="{{ old('name', $user->roles) }}" multiple>
+                                <select name="roles[]" class="form-control"  multiple>
                                     <option value="">Select Role</option>
                                     @foreach ($role as $item)
-                                        <option value="{{ $item }}">{{ $item }}</option>
+                                        <option 
+                                        value="{{ $item }}"
+                                        {{ in_array($item, $userRoles) ? 'selected':'' }}
+                                        >
+                                        {{ $item }}</option>
                                     @endforeach
                                 </select>
                             </div>

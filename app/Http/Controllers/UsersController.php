@@ -57,7 +57,14 @@ class UsersController extends Controller
     public function edit(User $user)
     {
         $role = Role::pluck('name', 'name')->all();
-        return view('role-permissions.user.edit', ['user' => $user, 'role' => $role]);
+        // $userRoles = $user->pluck('name', 'name')->all();
+        $userRoles = $user->roles->pluck('name')->toArray();
+        return view('role-permissions.user.edit', 
+        [
+            'user' => $user,
+            'role' => $role,
+            'userRoles' => $userRoles
+        ]);
     }
 
     /**
@@ -68,7 +75,7 @@ class UsersController extends Controller
         $fields = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'email|required',
-            'roles' => 'required|array'
+            'roles' => 'required'
         ]);
         $user->update($fields);
         $user->roles()->sync($fields['roles']);
