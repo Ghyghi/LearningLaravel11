@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -32,7 +33,8 @@ class UserController extends Controller
             'password'=> ['required', 'min:8', 'confirmed']
         ]);
         $incomingFields['password'] = bcrypt($incomingFields['password']);
-        User::create($incomingFields);
+        $user = User::create($incomingFields);
+        // $user->assignRole('Super Admin');
         return redirect('/')->with('success', 'You have been registered, please login to continue');
     }
     public function login(Request $request){
@@ -43,7 +45,7 @@ class UserController extends Controller
         if (auth()->attempt(['name'=>$incomingFields['loginusername'], 'password'=>$incomingFields['loginpassword']])){
             $request->session()->regenerate();
             //Redirect Admin to admin dashboard, else redirect to normal dashboard
-            if (Gate::allows('admin')){
+            if (auth()->user()->hasRole(['Admin', 'Super Admin'])){
                 return redirect()->route('adminDashboard')->with('success', 'Login Success');
             }
             else{
@@ -55,6 +57,8 @@ class UserController extends Controller
         }
     }
     public function dashboard(){
-        return view('dashboard');
+        $id = auth()->user()->id;
+        $tasks = Task::where('assignedTo', $id)->count();
+        return view('dashboard', ['tasks'=>$tasks]);
     }
 }

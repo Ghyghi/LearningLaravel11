@@ -11,10 +11,13 @@ class Task extends Model
 
     protected $table = 'task';
 
-    protected $fillable = ['title', 'body', 'user_id'];
+    protected $fillable = ['title', 'body', 'user_id', 'priority', 'status', 'assignedTo'];
 
     public function user(){
-        //Define a one-to-many relationship between the Task and User models
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assignedTo');
     }
 }

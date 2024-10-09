@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->longText('body');
             $table->foreignId('user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('priority');
+            $table->foreignId('assignedTo')->constrained('users', 'id')->onDelete('cascade')->onUpdate('cascade');
+            $table->String('status');
             $table->timestamps();
         });
     }

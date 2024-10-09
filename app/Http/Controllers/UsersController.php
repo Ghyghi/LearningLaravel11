@@ -78,15 +78,17 @@ class UsersController extends Controller
             'roles' => 'required'
         ]);
         $user->update($fields);
-        $user->roles()->sync($fields['roles']);
+        $user->syncRoles($fields['roles']);
         return redirect('/users')->with('success', 'User updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($userId)
     {
-        //
+        $user = User::findOrFail($userId);
+        $user->delete();
+        return redirect('/users')->with('success', 'User deleted successfully');
     }
 }

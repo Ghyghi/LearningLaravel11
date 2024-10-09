@@ -28,6 +28,11 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
+    public function assignedTo()
+    {
+        return $this->belongsTo(User::class, 'assignedTo');
+    }
+
     
     
     /**

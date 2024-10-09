@@ -17,16 +17,45 @@
       <div class="container d-flex flex-column flex-md-row align-items-center p-3">
         @auth
           <div class="flex-row my-3 my-md-0">
-            @if(auth()->user()->isAdmin===1)
+            @if(auth()->user()->hasRole(['Admin', 'Super Admin']))
               <h4 class="my-0 mr-md-auto font-weight-normal">
                 <a href="{{ route('adminDashboard') }}" class="text-white">ToDo App</a>
               </h4>
               <a class="btn btn-sm btn-success mr-2" href="{{route('adminDashboard')}}">Dashboard</a>
+              
+              <!-- Collapsible Admin Links -->
+              <button class="btn btn-info btn-sm mr-2" type="button" data-toggle="collapse" data-target="#adminLinks" aria-expanded="false" aria-controls="adminLinks">
+                Admin Links
+              </button>
+    
+              <div class="collapse" id="adminLinks">
+                <div class="container mt-3">
+                  <a class="btn btn-sm btn-info mx-2" href="{{ url('permissions') }}">Permissions</a>
+                  <a class="btn btn-sm btn-info mx-2" href="{{ url('roles') }}">Roles</a>
+                  <a class="btn btn-sm btn-info mx-2" href="{{ url('users') }}">Users</a>
+                </div>
+              </div>
+
+              <!-- Collapsible Task Links -->
+              <button class="btn btn-info btn-sm mr-2" type="button" data-toggle="collapse" data-target="#taskLinks" aria-expanded="false" aria-controls="taskLinks">
+                Task Links
+              </button>
+    
+              <div class="collapse" id="taskLinks">
+                <div class="container mt-3">
+                  <a class="btn btn-sm btn-success mr-2" href="{{route('createTask')}}">Create Task</a>
+                  <a class="btn btn-sm btn-info mx-2" href="{{ route('viewTasks') }}">View All Tasks</a>
+                  <a class="btn btn-sm btn-info mx-2" href="{{ route('viewAllTasks') }}">View My Tasks</a>
+                </div>
+              </div>
+    
             @else
-              <h4 class="my-0 mr-md-auto font-weight-normal"><a href="{{ route('dashboard') }}" class="text-white">ToDo App</a></h4>
+              <h4 class="my-0 mr-md-auto font-weight-normal">
+                <a href="{{ route('dashboard') }}" class="text-white">ToDo App</a>
+              </h4>
               <a class="btn btn-sm btn-success mr-2" href="{{route('dashboard')}}">Dashboard</a>
+              <a class="btn btn-sm btn-info mx-2" href="{{ route('viewAllTasks') }}">View My Tasks</a>
             @endif
-            <a class="btn btn-sm btn-success mr-2" href="{{route('createTask')}}">Create Task</a>
             <form action="/logout" method="POST" class="d-inline">
               @csrf
               <button class="btn btn-sm btn-secondary">Sign Out</button>
@@ -40,13 +69,13 @@
               <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
                 <input name="loginusername" class="form-control form-control-sm input-dark" type="text" placeholder="Username" autocomplete="off" />
                 @error('loginusername')
-                <p class='m-0 small alert-danger shadow-sm'>{{$message}}</p>
+                  <p class='m-0 small alert-danger shadow-sm'>{{$message}}</p>
                 @enderror
               </div>
               <div class="col-md mr-0 pr-md-0 mb-3 mb-md-0">
                 <input name="loginpassword" class="form-control form-control-sm input-dark" type="password" placeholder="Password" />
                 @error('loginpassword')
-                <p class='m-0 small alert-danger shadow-sm'>{{$message}}</p>
+                  <p class='m-0 small alert-danger shadow-sm'>{{$message}}</p>
                 @enderror
               </div>
               <div class="col-md-auto">
