@@ -7,8 +7,8 @@
                     <div class="card h-100">
                         <div class="card-body">                            
                             <h3 class="card-title">{{ $task->title }}</h3>
-                            <p>By {{ $task->user->name }}</p>
-                            <p>For {{ $task->assignedTo }}</p>
+                            <p>By: {{ $task->user->name }}</p>
+                            <p>For: {{ $task->assignedUser->name ?? 'Unassigned' }}</p>
                             <a href="{{ route('viewSingleTask', $task->id) }}" class="card-text">See whole task</a>
                         </div>
                     </div>

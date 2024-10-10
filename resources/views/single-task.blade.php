@@ -19,7 +19,7 @@
         </div>
   
         <p class="text-muted small mb-4">
-          Posted by <a href="#">{{$task->user->name}}</a> on {{$task->created_at->format('d M, Y')}}
+          Created by {{$task->user->name}} on {{$task->created_at->format('d M, Y')}}
         </p>
   
         <div class="body-content">

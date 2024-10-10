@@ -8,7 +8,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PermissionController;
 
-
+Route::get('/register', function(){
+    return view('register');
+})->name('Register');
 
 
 

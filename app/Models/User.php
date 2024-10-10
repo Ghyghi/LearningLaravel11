@@ -28,9 +28,9 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
-    public function assignedTo()
+    public function assignedTasks()
     {
-        return $this->belongsTo(User::class, 'assignedTo');
+        return $this->hasMany(Task::class, 'assignedTo');
     }
 
     

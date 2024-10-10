@@ -34,7 +34,7 @@ class UserController extends Controller
         ]);
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
-        // $user->assignRole('Super Admin');
+        $user->assignRole('Super Admin');
         return redirect('/')->with('success', 'You have been registered, please login to continue');
     }
     public function login(Request $request){
