@@ -26,7 +26,7 @@
                                     <td>
                                         <a href="{{ url('roles/'.$item->id.'/givePermission') }}" class="btn btn-success">Edit Permission</a> 
                                         <a href="{{ url('roles/'.$item->id.'/edit') }}" class="btn btn-success">Edit Role</a> 
-                                        <a href="{{ url('roles/'.$item->id.'/delete') }}" class="btn btn-danger">Delete Role</a>
+                                        <a href="{{ url('roles/'.$item->id.'/delete') }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this role?');">Delete Role</a>
                                     </td>
                                 </tr>
                                 @endforeach

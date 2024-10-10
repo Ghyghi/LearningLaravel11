@@ -9,14 +9,9 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function admin_dashboard(){
-        $countAdmin = User::role('Admin')->count();
-        $countSuperAdmin = User::role('Super Admin')->count();
-        $countUser = User::role('User')->count();
-        $recordAdmin = User::role('Admin')->get();
-        $recordSuperAdmin = User::role('Super Admin')->get();
-        $recordUser = User::role('User')->get();
-        return view('adminDashboard', ['countAdmin'=>$countAdmin, 'countSuperAdmin'=>$countSuperAdmin, 'countUser'=>$countUser, 'recordAdmin'=>$recordAdmin, 'recordSuperAdmin'=>$recordSuperAdmin, 'recordUser'=>$recordUser]);
+        return view('adminDashboard');
     }
+
     public function viewTasks(){
         $users = User::get();
         $userIds = [];

@@ -16,51 +16,55 @@
     <header class="header-bar mb-3">
       <div class="container d-flex flex-column flex-md-row align-items-center p-3">
         @auth
-          <div class="flex-row my-3 my-md-0">
-            @if(auth()->user()->hasRole(['Admin', 'Super Admin']))
+        <div class="d-flex flex-wrap align-items-center justify-content-between my-3 my-md-0">
+          @if(auth()->user()->hasRole(['Admin', 'Super Admin']))
+            <div class="d-flex align-items-center">
               <h4 class="my-0 mr-md-auto font-weight-normal">
-                <a href="{{ route('adminDashboard') }}" class="text-white">ToDo App</a>
+                <a href="{{ route('adminDashboard') }}" class="text-white text-decoration-none">ToDo App</a>
               </h4>
-              <a class="btn btn-sm btn-success mr-2" href="{{route('adminDashboard')}}">Dashboard</a>
+              <a class="btn btn-sm btn-success mx-2" href="{{route('adminDashboard')}}">Dashboard</a>
               
               <!-- Collapsible Admin Links -->
-              <button class="btn btn-info btn-sm mr-2" type="button" data-toggle="collapse" data-target="#adminLinks" aria-expanded="false" aria-controls="adminLinks">
+              <button class="btn btn-info btn-sm mx-2" type="button" data-toggle="collapse" data-target="#adminLinks" aria-expanded="false" aria-controls="adminLinks">
                 Admin Links
               </button>
-    
+              
               <div class="collapse" id="adminLinks">
-                <div class="container mt-3">
+                <div class="d-flex flex-wrap mt-3">
                   <a class="btn btn-sm btn-info mx-2" href="{{ url('permissions') }}">Permissions</a>
                   <a class="btn btn-sm btn-info mx-2" href="{{ url('roles') }}">Roles</a>
                   <a class="btn btn-sm btn-info mx-2" href="{{ url('users') }}">Users</a>
                 </div>
               </div>
-
+        
               <!-- Collapsible Task Links -->
-              <button class="btn btn-info btn-sm mr-2" type="button" data-toggle="collapse" data-target="#taskLinks" aria-expanded="false" aria-controls="taskLinks">
+              <button class="btn btn-info btn-sm mx-2" type="button" data-toggle="collapse" data-target="#taskLinks" aria-expanded="false" aria-controls="taskLinks">
                 Task Links
               </button>
-    
+              
               <div class="collapse" id="taskLinks">
-                <div class="container mt-3">
-                  <a class="btn btn-sm btn-success mr-2" href="{{route('createTask')}}">Create Task</a>
+                <div class="d-flex flex-wrap mt-3">
+                  <a class="btn btn-sm btn-success mx-2" href="{{route('createTask')}}">Create Task</a>
                   <a class="btn btn-sm btn-info mx-2" href="{{ route('viewTasks') }}">View All Tasks</a>
                   <a class="btn btn-sm btn-info mx-2" href="{{ route('viewAllTasks') }}">View My Tasks</a>
                 </div>
               </div>
-    
-            @else
+            </div>
+          @else
+            <div class="d-flex align-items-center">
               <h4 class="my-0 mr-md-auto font-weight-normal">
-                <a href="{{ route('dashboard') }}" class="text-white">ToDo App</a>
+                <a href="{{ route('dashboard') }}" class="text-white text-decoration-none">ToDo App</a>
               </h4>
-              <a class="btn btn-sm btn-success mr-2" href="{{route('dashboard')}}">Dashboard</a>
+              <a class="btn btn-sm btn-success mx-2" href="{{route('dashboard')}}">Dashboard</a>
               <a class="btn btn-sm btn-info mx-2" href="{{ route('viewAllTasks') }}">View My Tasks</a>
-            @endif
-            <form action="/logout" method="POST" class="d-inline">
-              @csrf
-              <button class="btn btn-sm btn-secondary">Sign Out</button>
-            </form>
-          </div>
+            </div>
+          @endif
+          <form action="/logout" method="POST" class="d-inline">
+            @csrf
+            <button class="btn btn-sm btn-secondary">Sign Out</button>
+          </form>
+        </div>
+        
         @else
           <h4 class="my-0 mr-md-auto font-weight-normal"><a href="/" class="text-white">ToDo App</a></h4>
           <form action="/login" method="POST" class="mb-0 pt-2 pt-md-0">

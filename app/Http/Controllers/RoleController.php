@@ -19,8 +19,6 @@ class RoleController extends Controller
         $roles = Role::get();
         return view('role-permissions.role.index', ['roles'=>$roles]);
     }
-
-
     /**
      * Show the form for creating a new resource.
      */
@@ -28,7 +26,6 @@ class RoleController extends Controller
     {
         return view('role-permissions.role.create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -42,7 +39,6 @@ class RoleController extends Controller
         Role::create(['name' => $request->name]);
         return redirect('/roles')->with('success', 'Role created successfully');
     }
-
     /**
      * Display the specified resource.
      */
@@ -50,7 +46,6 @@ class RoleController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -58,7 +53,6 @@ class RoleController extends Controller
     {
         return view('role-permissions.role.edit', ['role'=>$role]);
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -72,7 +66,6 @@ class RoleController extends Controller
         $role->update(['name' => $request->name]);
         return redirect('/roles')->with('success', 'Role updated successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -82,7 +75,6 @@ class RoleController extends Controller
         $roles->delete();
         return redirect('/roles')->with('success', 'Role deleted successfully');
     }
-
     public function givePermission($id){
         $permission = Permission::all();
         $role = Role::findOrFail($id);
@@ -95,7 +87,6 @@ class RoleController extends Controller
             'permission'=>$permission,
             'rolePermission'=>$rolePermission]);
     }
-
     public function updatePermission(Request $request, $id){
         $request -> validate([
             'permission' => 'required'
