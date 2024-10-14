@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Task extends Model
+class Task extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $table = 'task';
 
@@ -19,5 +21,19 @@ class Task extends Model
     public function assignedUser()
     {
         return $this->belongsTo(User::class, 'assignedTo');
+    }
+
+    public function images()
+    {
+        return $this->getMedia('images');
+    }
+
+    public function firstImageUrl()
+    {
+        return $this->getFirstMediaUrl('images');
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images'); // Define the collection name
     }
 }

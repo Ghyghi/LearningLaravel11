@@ -26,8 +26,18 @@
             <p>{{$task->body}}</p>
             <p>Priority: {{$task->priority}}</p>
             <p>Status: {{$task->status}}</p>
-            <p>Assigned to: {{$task->assignedto->name}}</p>
+            <p>Assigned to: {{$task->assignedUser->name}}</p>
             <p>Created by: {{$task->user->name}}</p>
+            <h4> <strong> Images associated with the task </strong> </h4>
+            @if($images->isEmpty())
+              <p>No images available for this task.</p>
+            @else
+              <div>
+                  @foreach ($images as $media)
+                      <img src="{{ $media->getUrl() }}" alt="{{ $media->name }}" style="max-width: 100%; height: auto;">
+                  @endforeach
+              </div>
+            @endif
         </div>
         @auth
             @if(auth()->user()->hasPermissionTo('View All'))

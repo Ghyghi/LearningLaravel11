@@ -8,11 +8,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
 {
-    use AuthorizesRequests; // This trait is used to authorize actions in the controller
+    use AuthorizesRequests;
 
     public function taskform(){
         $users = User::all();
@@ -22,23 +23,39 @@ class TaskController extends Controller
         $newtask = $request->validate([
             'title' => 'required',
             'body' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'priority' => 'required|string',
-            'assignedTo' => 'required',
+            'assignedTo' => 'required|exists:users,id',
             'status' => 'required',
             
         ]);
         $newtask['title'] = strip_tags($newtask['title']);
         $newtask['body'] = strip_tags($newtask['body']);
-        // $assigned = User::where('name', $newtask['assign'])->first();
-        // $newtask['assign'] = $assigned->id;
-
         $newtask['user_id'] = auth()->id();
 
         $tasking = Task::create($newtask);
+
+        // if ($request->hasFile('image')) {
+        //     $media = $tasking->addMediaFromRequest('image')->toMediaCollection();
+        //     $newtask['image_id'] = $media->id;
+        // }
+        if ($request->hasFile('image')) {
+            $tasking->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
+        // $tasking->update(['image_id' => $newtask['image_id']]);
         return redirect()->route('viewSingleTask', ['task'=>$tasking->id]);
     }
     public function singleTask(Task $task){
-        return view('single-task', ['task' => $task])->with('success', 'Task created successfully!');
+        // $task = Task::findOrFail($task);
+        // $task = Task::where('id', $task)->get();
+        $images = $task->getMedia('images'); // Get media from the 'images' collection
+
+        return view('single-task', [
+            'task' => $task,
+            'images' => $images,
+        ]);
+
     }
     public function allTasks(){
         $id = auth()->id();
@@ -55,11 +72,18 @@ class TaskController extends Controller
             'body' => 'required',
             'priority' => 'required|string',
             'assignedTo' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required',
             ]);
+
             $updatesTask['title'] = strip_tags($updatesTask['title']);
             $updatesTask['body'] = strip_tags($updatesTask['body']);
+
             $task->update($updatesTask);
+            
+            if ($request->hasFile('image')) {
+                $task->addMediaFromRequest('image')->toMediaCollection('images');
+            }
 
             return redirect()->route('viewTasks')->with('success', 'Task updated successfully!');
         

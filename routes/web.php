@@ -5,20 +5,19 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PermissionController;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 Route::get('/register', function(){
     return view('register');
 })->name('Register');
 
 
-
-
 //Permission Routes
 Route::resource('permissions', PermissionController::class);
 Route::get('permissions/{permission}/delete', [PermissionController::class,'destroy'])->middleware('permission:Delete Permission');
-
 
 //Role routes
 Route::resource('roles', RoleController::class);
