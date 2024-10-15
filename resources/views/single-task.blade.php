@@ -2,7 +2,7 @@
   <div class="container py-md-5 container--narrow">
       <div class="d-flex justify-content-between align-items-center mb-4">
           <h2 class="text-primary">{{$task->title}}</h2>
-          @can(['Edit Task', 'Delete Task'])
+          @can(['Edit Task'])
               <span class="pt-2">
                   <a href="/edit-task/{{$task->id}}" class="text-primary mr-2" data-toggle="tooltip" data-placement="top" title="Edit">
                       <i class="fas fa-edit"></i>
