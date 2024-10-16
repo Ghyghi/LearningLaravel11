@@ -80,7 +80,7 @@ class TaskController extends Controller
             $updatesTask['body'] = strip_tags($updatesTask['body']);
 
             $task->update($updatesTask);
-            
+
             if ($request->hasFile('image')) {
                 $task->addMediaFromRequest('image')->toMediaCollection('images');
             }
