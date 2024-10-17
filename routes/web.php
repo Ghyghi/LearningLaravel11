@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PermissionController;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 
 Route::get('/register', function(){
     return view('register');

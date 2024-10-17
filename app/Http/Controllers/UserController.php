@@ -57,8 +57,15 @@ class UserController extends Controller
         }
     }
     public function dashboard(){
-        $id = auth()->user()->id;
-        $tasks = Task::where('assignedTo', $id)->count();
-        return view('dashboard', ['tasks'=>$tasks]);
+        $tasks = Task::where('assignedTo', auth()->id())->count();
+
+        $completed = Task::where('assignedTo', auth()->id())->where('status', 'Completed')->count();
+        $assigned = Task::where('assignedTo', auth()->id())->where('status', 'Assigned')->count();
+        $pending = Task::where('assignedTo', auth()->id())->where('status', 'In Progress')->count();
+
+        $high = Task::where('assignedTo', auth()->id())->where('priority', 'High')->count();
+        $medium = Task::where('assignedTo', auth()->id())->where('priority', 'Medium')->count();
+        $low = Task::where('assignedTo', auth()->id())->where('priority', 'Low')->count();
+        return view('dashboard', ['tasks'=>$tasks, 'completed'=>$completed, 'assigned'=>$assigned, 'pending'=>$pending, 'high'=>$high, 'medium'=>$medium, 'low'=>$low]);
     }
 }
