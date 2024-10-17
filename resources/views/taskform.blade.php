@@ -53,7 +53,7 @@
                 <select name="status" id="task-status" class="text-muted mb-1">
                     <option value="">Select Status</option>
                     <option value="Completed" {{ old('status') === 'Completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="None" {{ old('status') === 'None' ? 'selected' : '' }}>None</option>
+                    <option value="Assigned" {{ old('status') === 'None' ? 'selected' : '' }}>Assigned</option>
                     <option value="In Progress" {{ old('status') === 'In Progress' ? 'selected' : '' }}>In Progress</option>
                 </select>
                 @error('status')

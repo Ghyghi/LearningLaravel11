@@ -55,7 +55,7 @@
                 <select name="status" id="task-status">
                     <option value="">Select Status</option>
                     <option value="Completed" {{ old('status', $task->status) === 'Completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="None" {{ old('status', $task->status) === 'None' ? 'selected' : '' }}>None</option>
+                    <option value="Assigned" {{ old('status', $task->status) === 'None' ? 'selected' : '' }}>Assigned</option>
                     <option value="In Progress" {{ old('status', $task->status) === 'In Progress' ? 'selected' : '' }}>In Progress</option>
                 </select>
                 @error('status')
