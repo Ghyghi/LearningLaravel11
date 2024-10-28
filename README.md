@@ -27,6 +27,7 @@ This Web App has a total of three(3) types of users.
 ### Download prerequisites
 
 If you don't have PHP and Composer installed on your local machine, the following commands will install PHP, Composer, and the Laravel installer on macOS, Windows, or Linux:
+
 **macOS:**
 ```bash
 /bin/bash -c "$(curl -fsSL https://php.new/install/mac)"
