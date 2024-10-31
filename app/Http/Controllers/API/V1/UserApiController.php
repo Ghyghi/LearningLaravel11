@@ -16,18 +16,21 @@ class UserApiController extends Controller
         $filter = new UserFilter();
         $queryitems = $filter->transform($request);
 
-        if (count($queryitems) == 0){
-            return new UserCollection(User::paginate());
+        $includeTasks = $request->query('includeTasks');
+
+        $users = User::where($queryitems);
+
+        if ($includeTasks){
+            $users = $users->with('tasks');
         }
-        else
-        {
-            $users = User::where($queryitems)->paginate();
-            return new UserCollection($users->appends($request->query()));
-        }
-        
+        return new UserCollection($users->paginate()->appends($request->query()));
     }
     public function show(User $user)
     {
+        $includeTasks = request()->query('includeTasks');
+        if ($includeTasks){
+            return new UserResource($user->loadMissing('tasks'));
+        }
         return new UserResource($user);
     }
 }
