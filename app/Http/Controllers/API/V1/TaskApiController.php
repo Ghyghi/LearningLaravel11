@@ -8,6 +8,7 @@ use App\Filter\V1\TaskFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TaskResource;
 use App\Http\Resources\V1\TaskCollection;
+use App\Http\Requests\V1\storeTaskRequest;
 
 class TaskApiController extends Controller
 {
@@ -28,6 +29,11 @@ class TaskApiController extends Controller
     }
     public function show(Task $task)
     {
+        return new TaskResource($task);
+    }
+    public function store(storeTaskRequest $request)
+    {
+        $task = Task::create($request->all());
         return new TaskResource($task);
     }
 }
