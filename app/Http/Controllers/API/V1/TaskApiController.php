@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TaskResource;
 use App\Http\Resources\V1\TaskCollection;
 use App\Http\Requests\V1\storeTaskRequest;
+use App\Http\Requests\V1\updateTaskRequest;
 
 class TaskApiController extends Controller
 {
@@ -35,6 +36,10 @@ class TaskApiController extends Controller
     {
         $task = Task::create($request->all());
         return new TaskResource($task);
+    }
+    public function update(updateTaskRequest $request, Task $task)
+    {
+        $task->update($request->all());
     }
 }
 
