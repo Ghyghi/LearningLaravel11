@@ -19,6 +19,7 @@ Route::get('/register', function(){
 
 //Permission Routes
 Route::resource('permissions', PermissionController::class);
+
 Route::get('permissions/{permission}/delete', [PermissionController::class,'destroy'])->middleware('permission:Delete Permission');
 
 //Role routes
